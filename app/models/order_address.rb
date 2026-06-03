@@ -11,7 +11,7 @@ class OrderAddress
   validates :phone_number, presence: true, format: { with: /\A\d{10,11}\z/ }
   validates :user_id, presence: true
   validates :item_id, presence: true
-  # validates :token, presence: true
+  validates :token, presence: true
 
   # 保存
   def save
