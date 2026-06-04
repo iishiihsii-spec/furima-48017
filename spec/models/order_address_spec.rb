@@ -5,8 +5,8 @@ RSpec.describe OrderAddress, type: :model do
     @order_address = FactoryBot.build(:order_address, user_id: 1, item_id: 1)
   end
 
-  describe "商品購入機能" do
-    context "購入できる場合" do
+  describe '商品購入機能' do
+    context '購入できる場合' do
       it 'すべての情報が正しく入力されている' do
         expect(@order_address).to be_valid
       end
@@ -16,7 +16,7 @@ RSpec.describe OrderAddress, type: :model do
       end
     end
 
-    context "購入できない場合" do
+    context '購入できない場合' do
       it 'postal_codeが空の場合' do
         @order_address.postal_code = ''
         @order_address.valid?
@@ -25,7 +25,7 @@ RSpec.describe OrderAddress, type: :model do
       it 'postal_codeが3桁数字-4桁数字ではない場合' do
         @order_address.postal_code = '1234567'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "Postal code Enter it as follows (e.g. 123-4567)"
+        expect(@order_address.errors.full_messages).to include 'Postal code Enter it as follows (e.g. 123-4567)'
       end
       it 'prefecture_idが1の場合' do
         @order_address.prefecture_id = 1
@@ -51,22 +51,22 @@ RSpec.describe OrderAddress, type: :model do
       it 'phone_numberが10桁未満のとき' do
         @order_address.phone_number = '123456789'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "Phone number is invalid"
+        expect(@order_address.errors.full_messages).to include 'Phone number is invalid'
       end
       it 'phone_numberが12桁以上のとき' do
         @order_address.phone_number = '123456789123'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "Phone number is invalid"
+        expect(@order_address.errors.full_messages).to include 'Phone number is invalid'
       end
       it 'phone_numberが全角の場合' do
         @order_address.phone_number = '１２３４５６７８９１'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "Phone number is invalid"
+        expect(@order_address.errors.full_messages).to include 'Phone number is invalid'
       end
       it 'phone_numberにハイフンが含まれている場合' do
         @order_address.phone_number = '090-1234-5678'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include "Phone number is invalid"
+        expect(@order_address.errors.full_messages).to include 'Phone number is invalid'
       end
       it 'user_idが紐づいていない場合' do
         @order_address.user_id = nil
