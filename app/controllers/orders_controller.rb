@@ -1,15 +1,14 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
+  before_action :find_item, only: [:index, :create]
   before_action :move_to_index, only: [:index, :create]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @item = Item.find(params[:item_id])
     @order = OrderAddress.new
   end
 
   def create
     @order = OrderAddress.new(order_params)
-    @item = Item.find(params[:item_id])
     if @order.valid?
       pay_item
       @order.save
@@ -22,8 +21,11 @@ class OrdersController < ApplicationController
 
   private
 
-  def move_to_index
+  def find_item
     @item = Item.find(params[:item_id])
+  end
+
+  def move_to_index
     return unless current_user.id == @item.user_id || @item.order
 
     redirect_to root_path
