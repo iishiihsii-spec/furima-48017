@@ -45,7 +45,7 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    return if @item.user_id == current_user.id
+    return if (@item.user_id == current_user.id) && @item.order.nil?
 
     redirect_to root_path
   end
